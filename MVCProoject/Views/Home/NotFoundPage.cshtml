@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "404";
+    var originalPath = ViewData["OriginalPath"]?.ToString() ?? string.Empty;
+}
+
+<section class="page my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="shadow border-0 rounded-4 overflow-hidden bg-white">
+                <div class="bg-primary text-white p-5 text-center">
+                    <p class="mb-2 opacity-75">Power Fitness</p>
+                    <h1 class="display-3 fw-bolder mb-0">404</h1>
+                </div>
+
+                <div class="p-5 text-center">
+                    <h2 class="fw-bolder text-black-alternative mb-3">This page does not exist</h2>
+                    <p class="text-muted fs-18 mb-3">
+                        We could not find <code>@originalPath</code>.
+                    </p>
+                    <p class="text-muted mb-4">
+                        You will be redirected to the plans page in 3 seconds.
+                    </p>
+
+                    <a asp-controller="Plan" asp-action="Index" class="btn-fill px-4">
+                        Go To Plans
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        window.setTimeout(function () {
+            window.location.href = '@Url.Action("Index", "Plan")';
+        }, 3000);
+    </script>
+}

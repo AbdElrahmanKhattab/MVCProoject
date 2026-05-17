@@ -1,0 +1,62 @@
+@model Plan
+
+@{
+    ViewData["Title"] = $"{Model.Name} Plan";
+}
+
+<section class="page plan-details-page my-5">
+    <div class="mb-4">
+        <a asp-controller="Plan" asp-action="Index" class="btn-outline btn-sm">Back to Plans</a>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+        <div class="col-lg-5">
+            <article class="plan-card h-100 shadow border-0 rounded-4 overflow-hidden bg-white">
+                <div class="bg-primary text-white p-5">
+                    <p class="mb-2 opacity-75">Power Fitness Plan</p>
+                    <h1 class="fw-bolder display-4 mb-0">@Model.Name</h1>
+                </div>
+                <div class="p-5">
+                    <p class="fs-18 text-muted">@Model.Description</p>
+                    <div class="d-flex align-items-end gap-2 mt-4">
+                        <span class="display-4 fw-bolder text-primary-color">@Model.Price.ToString("0.##")</span>
+                        <span class="pb-3 text-muted">EGP</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="row row-cols-1 row-cols-md-2 g-4 h-100">
+                <div class="col">
+                    <div class="detail-box h-100 border rounded-4 p-4 bg-white">
+                        <div class="icon-box mb-3 text-primary-color fw-bold">ID</div>
+                        <p class="text-muted mb-1">Plan Id</p>
+                        <h2 class="h4 fw-bold">@Model.Id</h2>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="detail-box h-100 border rounded-4 p-4 bg-white">
+                        <div class="icon-box mb-3 text-primary-color fw-bold">D</div>
+                        <p class="text-muted mb-1">Duration</p>
+                        <h2 class="h4 fw-bold">@Model.DurationDays days</h2>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="detail-box h-100 border rounded-4 p-4 bg-white">
+                        <div class="icon-box mb-3 text-primary-color fw-bold">S</div>
+                        <p class="text-muted mb-1">Status</p>
+                        <h2 class="h4 fw-bold">@(Model.IsActive ? "Active" : "Inactive")</h2>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="detail-box h-100 border rounded-4 p-4 bg-white">
+                        <div class="icon-box mb-3 text-primary-color fw-bold">C</div>
+                        <p class="text-muted mb-1">Created At</p>
+                        <h2 class="h4 fw-bold">@Model.CreatedAt.ToString("MMM dd, yyyy")</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
