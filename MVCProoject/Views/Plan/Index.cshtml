@@ -1,0 +1,52 @@
+@model IEnumerable<Plan>
+
+@{
+    ViewData["Title"] = "Plans";
+}
+
+<section class="page plans-page my-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+        <div>
+            <p class="text-primary-color fw-bold mb-2">Membership Catalog</p>
+            <h1 class="fw-bolder display-5 text-black-alternative mb-0">Choose a Power Fitness plan</h1>
+        </div>
+        <span class="badge bg-primary fs-6 rounded-pill px-4 py-3">@Model.Count() Active Plans</span>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info rounded-4">
+            No active plans are available right now.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+            @foreach (var plan in Model)
+            {
+                <div class="col">
+                    <article class="plan-card h-100 shadow-sm border rounded-4 overflow-hidden bg-white">
+                        <div class="bg-primary text-white p-4">
+                            <p class="mb-1 opacity-75">Membership</p>
+                            <h2 class="fw-bolder mb-0">@plan.Name</h2>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-muted mb-4">@plan.Description</p>
+                            <div class="d-flex align-items-end gap-2 mb-4">
+                                <span class="display-6 fw-bolder text-primary-color">@plan.Price.ToString("0")</span>
+                                <span class="pb-2 text-muted">EGP</span>
+                            </div>
+                            <div class="info-item d-flex justify-content-between border-top border-bottom py-3 mb-4">
+                                <span class="text-muted">Duration</span>
+                                <strong>@plan.DurationDays days</strong>
+                            </div>
+                            <a asp-controller="Plan" asp-action="Details" asp-route-id="@plan.Id" class="btn-fill w-100">
+                                View Details
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    }
+</section>
