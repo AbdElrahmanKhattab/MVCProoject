@@ -1,20 +1,37 @@
 @{
-    var success = TempData["Success"] as string ?? TempData["SuccessMessage"] as string;
-    var error = TempData["Error"] as string ?? TempData["ErrorMessage"] as string;
+    var success = TempData["SuccessMessage"] as string
+                  ?? TempData["Success"] as string;
+
+    var error = TempData["ErrorMessage"] as string
+                ?? TempData["Error"] as string;
 }
 
 @if (!string.IsNullOrWhiteSpace(success))
 {
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div id="Alert" class="alert alert-success alert-dismissible fade show">
+        <i class="bi bi-check-circle-fill me-2"></i>
+
         @success
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close">
+        </button>
     </div>
 }
 
 @if (!string.IsNullOrWhiteSpace(error))
 {
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div id="Alert" class="alert alert-danger alert-dismissible fade show">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
         @error
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close">
+        </button>
     </div>
 }

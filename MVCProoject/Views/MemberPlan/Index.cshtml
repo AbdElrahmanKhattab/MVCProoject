@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <h1 class="h2 mb-1 fw-semibold">Active Memberships</h1>
-                <p class="mb-0 text-light opacity-75">Members that have active plans</p>
+                <p class="mb-0 text-light opacity-75">Members That have Active Plans</p>
             </div>
             <div class="col text-end">
                 <a asp-action="Create" class="btn btn-light">
@@ -45,12 +45,14 @@
                                     <td>@membership.StartDate.ToString("MMM dd, yyyy")</td>
                                     <td>@membership.EndDate.ToString("MMM dd, yyyy")</td>
                                     <td>
-                                        <form asp-action="Cancel" method="post" class="m-0">
-                                            <input type="hidden" name="id" value="@membership.Id" />
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Cancel this membership?');">
-                                                <i class="bi bi-x-lg"></i> Cancel
-                                            </button>
-                                        </form>
+                                        <div class="d-flex gap-1">
+                                            <form asp-action="Cancel" method="post" class="m-0">
+                                                <input type="hidden" name="id" value="@membership.Id" />
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Cancel this membership?');">
+                                                    <i class="bi bi-x-lg"></i> Cancel
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             }

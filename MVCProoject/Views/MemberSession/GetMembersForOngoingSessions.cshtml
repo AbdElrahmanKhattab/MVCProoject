@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <div>
             <h1 class="h2 mb-1 fw-semibold">Session Members</h1>
-            <p class="mb-0 text-light opacity-75">Members attendance</p>
+            <p class="mb-0 text-light opacity-75">Members Attendance</p>
         </div>
     </div>
 </header>
@@ -32,21 +32,23 @@
                         <tr>
                             <td>@booking.Member.Name</td>
                             <td>
-                                @if (booking.IsAttended)
-                                {
-                                    <span class="text-success fw-bold">
-                                        <i class="bi bi-check-circle me-1"></i> Attended
-                                    </span>
-                                }
-                                else
-                                {
-                                    <form asp-action="MarkAttendance" method="post" class="d-inline">
-                                        <input type="hidden" name="id" value="@booking.Id" />
-                                        <button type="submit" class="btn btn-outline-success btn-sm">
-                                            <i class="bi bi-check-circle me-1"></i> Mark as Attended
-                                        </button>
-                                    </form>
-                                }
+                                <div class="d-flex justify-content-center gap-1">
+                                    @if (booking.IsAttended)
+                                    {
+                                        <span class="text-success fw-bold">
+                                            <i class="bi bi-check-circle me-1"></i> Attended
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="MarkAttendance" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@booking.Id" />
+                                            <button type="submit" class="btn btn-outline-success btn-sm">
+                                                <i class="bi bi-check-circle me-1"></i> Mark as Attended
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
                             </td>
                         </tr>
                     }
