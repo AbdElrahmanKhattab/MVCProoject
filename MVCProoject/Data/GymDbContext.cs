@@ -11,6 +11,9 @@ namespace MVC.Data
         }
 
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<HealthRecord> HealthRecords { get; set; }
+        public DbSet<Trainer> Trainers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

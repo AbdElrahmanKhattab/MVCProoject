@@ -1,0 +1,70 @@
+@model IEnumerable<Membership>
+
+@{
+    ViewData["Title"] = "Active Memberships";
+}
+
+<div class="container-fluid">
+    <header class="bg-primary text-white rounded-3 p-4 shadow-sm mt-5 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h2 mb-1 fw-semibold">Active Memberships</h1>
+                <p class="mb-0 text-light opacity-75">Members that have active plans</p>
+            </div>
+            <div class="col text-end">
+                <a asp-action="Create" class="btn btn-light">
+                    <i class="bi bi-plus-lg"></i> New Membership
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <partial name="_AlertMessages" />
+
+    <div class="card">
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Plan</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var membership in Model)
+                            {
+                                <tr>
+                                    <td>@membership.Member.Name</td>
+                                    <td>@membership.Plan.Name</td>
+                                    <td>@membership.StartDate.ToString("MMM dd, yyyy")</td>
+                                    <td>@membership.EndDate.ToString("MMM dd, yyyy")</td>
+                                    <td>
+                                        <form asp-action="Cancel" method="post" class="m-0">
+                                            <input type="hidden" name="id" value="@membership.Id" />
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Cancel this membership?');">
+                                                <i class="bi bi-x-lg"></i> Cancel
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-person-workspace display-1 text-muted"></i>
+                    <h2 class="h4 mt-3 text-muted">No Active Memberships Available</h2>
+                </div>
+            }
+        </div>
+    </div>
+</div>

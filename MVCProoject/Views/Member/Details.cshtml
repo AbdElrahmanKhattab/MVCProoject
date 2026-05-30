@@ -1,0 +1,46 @@
+@model Member
+
+@{
+    ViewData["Title"] = $"{Model.Name} Details";
+}
+
+<section class="my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <p class="text-primary-color fw-bold mb-1">Member Details</p>
+            <h1 class="fw-bolder text-black-alternative">@Model.Name</h1>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary rounded-pill">Edit</a>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">Back</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="bg-white border rounded-4 p-4 shadow-sm h-100">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+                    <dt class="col-sm-4">Phone</dt>
+                    <dd class="col-sm-8">@Model.Phone</dd>
+                    <dt class="col-sm-4">Date of Birth</dt>
+                    <dd class="col-sm-8">@Model.DateOfBirth.ToString("MMM dd, yyyy")</dd>
+                    <dt class="col-sm-4">Gender</dt>
+                    <dd class="col-sm-8">@Model.Gender</dd>
+                    <dt class="col-sm-4">Address</dt>
+                    <dd class="col-sm-8">@Model.BuildingNumber, @Model.Street, @Model.City</dd>
+                    <dt class="col-sm-4">Join Date</dt>
+                    <dd class="col-sm-8">@Model.JoinDate.ToString("MMM dd, yyyy")</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="bg-white border rounded-4 p-4 shadow-sm h-100">
+                <h2 class="h5 fw-bold">Health Record</h2>
+                <p class="text-muted mb-4">Height, weight, blood type, and notes.</p>
+                <a asp-action="HealthRecordDetails" asp-route-id="@Model.Id" class="btn btn-outline-primary rounded-pill w-100">View Health Record</a>
+            </div>
+        </div>
+    </div>
+</section>

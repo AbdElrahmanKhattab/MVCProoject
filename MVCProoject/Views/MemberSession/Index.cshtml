@@ -1,0 +1,45 @@
+@model MemberSessionIndexViewModel
+
+@{
+    ViewData["Title"] = "Member Sessions";
+}
+
+<div class="container">
+    <partial name="_AlertMessages" />
+
+    <header class="d-flex justify-content-between mt-5 mb-4 align-items-center">
+        <div>
+            <h1 class="h2 text-primary-color mb-0">Member Sessions</h1>
+            <p class="text-muted">Sessions available for booking management</p>
+        </div>
+    </header>
+
+    <div class="row g-4">
+        @foreach (var item in Model.UpcomingSessions)
+        {
+            <partial name="_SessionCard" model="item" />
+        }
+    </div>
+
+    <header class="d-flex justify-content-between mt-5 mb-4 align-items-center">
+        <div>
+            <h2 class="text-primary-color mb-0">Ongoing Sessions</h2>
+            <p class="text-muted">Sessions available for attendance management</p>
+        </div>
+    </header>
+
+    <div class="row g-4">
+        @foreach (var item in Model.OngoingSessions)
+        {
+            <partial name="_SessionCard" model="item" />
+        }
+    </div>
+
+    @if (!Model.UpcomingSessions.Any() && !Model.OngoingSessions.Any())
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-calendar-x display-1 text-muted"></i>
+            <h2 class="h4 mt-3 text-muted">No Sessions Available</h2>
+        </div>
+    }
+</div>

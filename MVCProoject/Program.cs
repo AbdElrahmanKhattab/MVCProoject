@@ -10,6 +10,13 @@ builder.Services.AddDbContext<GymDbContext>(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<GymDbContext>();
+    await context.Database.MigrateAsync();
+    await SeedData.InitializeAsync(context);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

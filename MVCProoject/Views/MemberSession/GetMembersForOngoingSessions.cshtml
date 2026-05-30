@@ -1,0 +1,68 @@
+@model SessionBookingsViewModel
+
+@{
+    ViewData["Title"] = "Ongoing Session Attendance";
+}
+
+<partial name="_AlertMessages" />
+
+<header class="bg-primary text-white rounded-3 p-4 shadow-sm mt-5 mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h2 mb-1 fw-semibold">Session Members</h1>
+            <p class="mb-0 text-light opacity-75">Members attendance</p>
+        </div>
+    </div>
+</header>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        @if (Model.Bookings.Any())
+        {
+            <table class="table table-striped table-hover align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Attendance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model.Bookings)
+                    {
+                        <tr>
+                            <td>@booking.Member.Name</td>
+                            <td>
+                                @if (booking.IsAttended)
+                                {
+                                    <span class="text-success fw-bold">
+                                        <i class="bi bi-check-circle me-1"></i> Attended
+                                    </span>
+                                }
+                                else
+                                {
+                                    <form asp-action="MarkAttendance" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@booking.Id" />
+                                        <button type="submit" class="btn btn-outline-success btn-sm">
+                                            <i class="bi bi-check-circle me-1"></i> Mark as Attended
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-person-workspace display-1 text-muted"></i>
+                <h2 class="h4 mt-3 text-muted">No Members Available</h2>
+            </div>
+        }
+    </div>
+
+    <div class="card-footer bg-white">
+        <a asp-action="Index" class="btn btn-fill">Back to List</a>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+@model TrainerFormViewModel
+
+<form asp-action="@(Model.IsEditMode ? "Edit" : "Create")" asp-route-id="@Model.Id" method="post" class="bg-white border rounded-4 p-4 shadow-sm">
+    <input asp-for="Id" type="hidden" />
+    <input asp-for="IsEditMode" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    @if (Model.IsEditMode)
+    {
+        <div class="alert alert-info">Name, date of birth, and gender are locked for trainer editing.</div>
+        <input asp-for="Name" type="hidden" />
+        <input asp-for="DateOfBirth" type="hidden" />
+        <input asp-for="Gender" type="hidden" />
+    }
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Name" class="form-label fw-bold"></label>
+            <input asp-for="Name" class="form-control" disabled="@Model.IsEditMode" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label fw-bold"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Phone" class="form-label fw-bold"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="DateOfBirth" class="form-label fw-bold">Date of Birth</label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" disabled="@Model.IsEditMode" />
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Gender" class="form-label fw-bold"></label>
+            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-select" disabled="@Model.IsEditMode"></select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Specialty" class="form-label fw-bold"></label>
+            <select asp-for="Specialty" asp-items="Html.GetEnumSelectList<Specialty>()" class="form-select"></select>
+            <span asp-validation-for="Specialty" class="text-danger"></span>
+        </div>
+        <div class="col-md-2">
+            <label asp-for="BuildingNumber" class="form-label fw-bold">Building</label>
+            <input asp-for="BuildingNumber" class="form-control" />
+            <span asp-validation-for="BuildingNumber" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Street" class="form-label fw-bold"></label>
+            <input asp-for="Street" class="form-control" />
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="City" class="form-label fw-bold"></label>
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary rounded-pill px-4 mt-4">@(Model.IsEditMode ? "Save Changes" : "Create Trainer")</button>
+</form>

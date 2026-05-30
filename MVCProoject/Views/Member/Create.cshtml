@@ -1,0 +1,97 @@
+@model CreateMemberViewModel
+
+@{
+    ViewData["Title"] = "Create Member";
+}
+
+<section class="my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <p class="text-primary-color fw-bold mb-1">Member Module</p>
+            <h1 class="fw-bolder text-black-alternative">Create Member</h1>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">Back</a>
+    </div>
+
+    <form asp-action="Create" method="post" class="bg-white border rounded-4 p-4 shadow-sm">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <h2 class="h5 fw-bold mb-3">Personal Information</h2>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="Name" class="form-label fw-bold"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Email" class="form-label fw-bold"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Phone" class="form-label fw-bold"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="DateOfBirth" class="form-label fw-bold">Date of Birth</label>
+                <input asp-for="DateOfBirth" type="date" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Gender" class="form-label fw-bold"></label>
+                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-select"></select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+
+        <h2 class="h5 fw-bold mt-4 mb-3">Address</h2>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label asp-for="BuildingNumber" class="form-label fw-bold">Building</label>
+                <input asp-for="BuildingNumber" class="form-control" />
+                <span asp-validation-for="BuildingNumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Street" class="form-label fw-bold"></label>
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="City" class="form-label fw-bold"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+
+        <h2 class="h5 fw-bold mt-4 mb-3">Health Record</h2>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label asp-for="HealthRecord.Height" class="form-label fw-bold"></label>
+                <input asp-for="HealthRecord.Height" class="form-control" />
+                <span asp-validation-for="HealthRecord.Height" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="HealthRecord.Weight" class="form-label fw-bold"></label>
+                <input asp-for="HealthRecord.Weight" class="form-control" />
+                <span asp-validation-for="HealthRecord.Weight" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="HealthRecord.BloodType" class="form-label fw-bold">Blood Type</label>
+                <input asp-for="HealthRecord.BloodType" class="form-control" />
+                <span asp-validation-for="HealthRecord.BloodType" class="text-danger"></span>
+            </div>
+            <div class="col-md-12">
+                <label asp-for="HealthRecord.Note" class="form-label fw-bold"></label>
+                <textarea asp-for="HealthRecord.Note" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="HealthRecord.Note" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary rounded-pill px-4 mt-4">Create Member</button>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

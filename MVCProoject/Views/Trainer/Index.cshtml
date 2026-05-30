@@ -1,0 +1,51 @@
+@model IEnumerable<Trainer>
+
+@{
+    ViewData["Title"] = "Trainers";
+}
+
+<section class="my-5">
+    <partial name="_AlertMessages" />
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <p class="text-primary-color fw-bold mb-1">Trainer Module</p>
+            <h1 class="fw-bolder text-black-alternative">Trainers</h1>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4">
+            <i class="bi bi-plus-circle me-1"></i> New Trainer
+        </a>
+    </div>
+
+    <div class="table-responsive bg-white border rounded-4 shadow-sm">
+        <table class="table align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Specialty</th>
+                    <th>Hire Date</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var trainer in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@trainer.Name</td>
+                        <td>@trainer.Email</td>
+                        <td>@trainer.Phone</td>
+                        <td>@trainer.Specialty</td>
+                        <td>@trainer.HireDate.ToString("MMM dd, yyyy")</td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@trainer.Id" class="btn btn-sm btn-outline-primary rounded-pill">Details</a>
+                            <a asp-action="Edit" asp-route-id="@trainer.Id" class="btn btn-sm btn-outline-secondary rounded-pill">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@trainer.Id" class="btn btn-sm btn-outline-danger rounded-pill">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

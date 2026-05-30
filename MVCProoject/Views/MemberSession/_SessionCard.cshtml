@@ -1,0 +1,54 @@
+@model SessionCardViewModel
+
+@{
+    var session = Model.Session;
+    var isOngoing = Model.Status == "Ongoing";
+    var headerClass = isOngoing ? "bg-success" : "bg-primary";
+    var actionName = isOngoing ? "GetMembersForOngoingSessions" : "GetMembersForUpcomingSession";
+}
+
+<div class="col-12 col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm border-0 session-card">
+        <div class="card-header text-white py-3 @headerClass">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="h5 mb-0">
+                    <i class="bi bi-calendar-event me-2"></i>@session.CategoryName
+                </h3>
+                <span class="badge bg-light text-dark">@Model.Status</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-3">@session.Description</p>
+
+            <div class="session-info mb-3">
+                <div class="info-item mb-2">
+                    <i class="bi bi-person-circle text-primary-color me-2"></i>
+                    <strong>Trainer:</strong> @session.TrainerName
+                </div>
+                <div class="info-item mb-2">
+                    <i class="bi bi-calendar3 text-primary-color me-2"></i>
+                    <strong>Date:</strong> @session.StartDate.ToString("MMM dd, yyyy")
+                </div>
+                <div class="info-item mb-2">
+                    <i class="bi bi-clock text-primary-color me-2"></i>
+                    <strong>Time:</strong> @session.StartDate.ToString("hh:mm tt") - @session.EndDate.ToString("hh:mm tt")
+                </div>
+                <div class="info-item mb-2">
+                    <i class="bi bi-hourglass-split text-primary-color me-2"></i>
+                    <strong>Duration:</strong> @Model.Duration.ToString(@"hh\:mm")
+                </div>
+                <div class="info-item">
+                    <i class="bi bi-people text-primary-color me-2"></i>
+                    <strong>Capacity:</strong> @Model.BookedCount/@session.Capacity slots
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-white border-0">
+            <div class="d-grid gap-2">
+                <a asp-controller="MemberSession" asp-action="@actionName" asp-route-sessionId="@session.Id" class="btn btn-outline btn-sm">
+                    <i class="bi bi-eye me-1"></i> View Members
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
