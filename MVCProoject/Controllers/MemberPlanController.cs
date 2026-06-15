@@ -80,7 +80,7 @@ namespace MVC.Controllers
 
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Membership created successfully.";
+            TempData["Success"] = "Membership created successfully.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -92,20 +92,20 @@ namespace MVC.Controllers
 
             if (membership is null)
             {
-                TempData["ErrorMessage"] = "Membership does not exist.";
+                TempData["Error"] = "Membership does not exist.";
                 return RedirectToAction(nameof(Index));
             }
 
             if (membership.EndDate <= DateTime.Now)
             {
-                TempData["ErrorMessage"] = "Only active memberships can be deleted.";
+                TempData["Error"] = "Only active memberships can be deleted.";
                 return RedirectToAction(nameof(Index));
             }
 
             _context.Memberships.Remove(membership);
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Membership cancelled successfully.";
+            TempData["Success"] = "Membership cancelled successfully.";
             return RedirectToAction(nameof(Index));
         }
 

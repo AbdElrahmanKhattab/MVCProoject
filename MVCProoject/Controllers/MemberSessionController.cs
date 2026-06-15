@@ -45,13 +45,13 @@ namespace MVC.Controllers
 
             if (session is null)
             {
-                TempData["ErrorMessage"] = "Session does not exist.";
+                TempData["Error"] = "Session does not exist.";
                 return RedirectToAction(nameof(Index));
             }
 
             if (session.StartDate <= DateTime.Now)
             {
-                TempData["ErrorMessage"] = "Only upcoming sessions can be managed from this page.";
+                TempData["Error"] = "Only upcoming sessions can be managed from this page.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -72,13 +72,13 @@ namespace MVC.Controllers
 
             if (session is null)
             {
-                TempData["ErrorMessage"] = "Session does not exist.";
+                TempData["Error"] = "Session does not exist.";
                 return RedirectToAction(nameof(Index));
             }
 
             if (session.StartDate > now || session.EndDate <= now)
             {
-                TempData["ErrorMessage"] = "Attendance can only be managed for ongoing sessions.";
+                TempData["Error"] = "Attendance can only be managed for ongoing sessions.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -95,13 +95,13 @@ namespace MVC.Controllers
 
             if (session is null)
             {
-                TempData["ErrorMessage"] = "Session does not exist.";
+                TempData["Error"] = "Session does not exist.";
                 return RedirectToAction(nameof(Index));
             }
 
             if (session.StartDate <= DateTime.Now)
             {
-                TempData["ErrorMessage"] = "Bookings can only be created for future sessions.";
+                TempData["Error"] = "Bookings can only be created for future sessions.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -120,7 +120,7 @@ namespace MVC.Controllers
 
             if (session is null)
             {
-                TempData["ErrorMessage"] = "Session does not exist.";
+                TempData["Error"] = "Session does not exist.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -170,7 +170,7 @@ namespace MVC.Controllers
 
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Booking created successfully.";
+            TempData["Success"] = "Booking created successfully.";
             return RedirectToAction(nameof(GetMembersForUpcomingSession), new { sessionId = session.Id });
         }
 
@@ -184,13 +184,13 @@ namespace MVC.Controllers
 
             if (booking is null)
             {
-                TempData["ErrorMessage"] = "Booking does not exist.";
+                TempData["Error"] = "Booking does not exist.";
                 return RedirectToAction(nameof(Index));
             }
 
             if (booking.GymSession.StartDate <= DateTime.Now)
             {
-                TempData["ErrorMessage"] = "Only future bookings can be cancelled.";
+                TempData["Error"] = "Only future bookings can be cancelled.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -198,7 +198,7 @@ namespace MVC.Controllers
             _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Booking cancelled successfully.";
+            TempData["Success"] = "Booking cancelled successfully.";
             return RedirectToAction(nameof(GetMembersForUpcomingSession), new { sessionId });
         }
 
@@ -213,20 +213,20 @@ namespace MVC.Controllers
 
             if (booking is null)
             {
-                TempData["ErrorMessage"] = "Booking does not exist.";
+                TempData["Error"] = "Booking does not exist.";
                 return RedirectToAction(nameof(Index));
             }
 
             if (booking.GymSession.StartDate > now || booking.GymSession.EndDate <= now)
             {
-                TempData["ErrorMessage"] = "Attendance can only be marked for ongoing sessions.";
+                TempData["Error"] = "Attendance can only be marked for ongoing sessions.";
                 return RedirectToAction(nameof(Index));
             }
 
             booking.IsAttended = true;
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Attendance marked successfully.";
+            TempData["Success"] = "Attendance marked successfully.";
             return RedirectToAction(nameof(GetMembersForOngoingSessions), new { sessionId = booking.GymSessionId });
         }
 

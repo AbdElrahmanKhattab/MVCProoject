@@ -1,6 +1,6 @@
 namespace MVC.Models
 {
-    public class Member
+    public class Trainer
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -11,11 +11,7 @@ namespace MVC.Models
         public int BuildingNumber { get; set; }
         public string Street { get; set; } = null!;
         public string City { get; set; } = null!;
-        public DateTime JoinDate { get; set; }
-        public string? Photo { get; set; }
-
-        public HealthRecord HealthRecord { get; set; } = null!;
-        public ICollection<Membership> Memberships { get; set; } = new List<Membership>();
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        public Specialty Specialty { get; set; }
+        public DateTime HireDate { get; set; }
     }
 }

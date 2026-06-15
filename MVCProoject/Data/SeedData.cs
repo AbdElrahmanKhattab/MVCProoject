@@ -8,6 +8,7 @@ namespace MVC.Data
         public static async Task InitializeAsync(GymDbContext context)
         {
             await SeedMembersAsync(context);
+            await SeedTrainersAsync(context);
             await SeedSessionsAsync(context);
             await SeedMembershipsAsync(context);
             await SeedBookingsAsync(context);
@@ -26,28 +27,118 @@ namespace MVC.Data
                     Name = "Omar Ahmed",
                     Email = "omar.ahmed@powerfitness.local",
                     Phone = "01000000001",
-                    JoinDate = DateTime.Now.AddDays(-45)
+                    DateOfBirth = new DateOnly(1998, 2, 12),
+                    Gender = Gender.Male,
+                    BuildingNumber = 12,
+                    Street = "Nile Street",
+                    City = "Cairo",
+                    JoinDate = DateTime.Now.AddDays(-45),
+                    HealthRecord = new HealthRecord
+                    {
+                        Height = 178,
+                        Weight = 82,
+                        BloodType = "O+",
+                        Note = "Ready for general training.",
+                        LastUpdate = DateTime.Now
+                    }
                 },
                 new Member
                 {
                     Name = "Ahmed Adel",
                     Email = "ahmed.adel@powerfitness.local",
                     Phone = "01000000002",
-                    JoinDate = DateTime.Now.AddDays(-30)
+                    DateOfBirth = new DateOnly(1997, 8, 21),
+                    Gender = Gender.Male,
+                    BuildingNumber = 14,
+                    Street = "Tahrir Street",
+                    City = "Cairo",
+                    JoinDate = DateTime.Now.AddDays(-30),
+                    HealthRecord = new HealthRecord
+                    {
+                        Height = 181,
+                        Weight = 86,
+                        BloodType = "B+",
+                        Note = "Prefers strength training.",
+                        LastUpdate = DateTime.Now
+                    }
                 },
                 new Member
                 {
                     Name = "Salma Osama",
                     Email = "salma.osama@powerfitness.local",
-                    Phone = "01000000003",
-                    JoinDate = DateTime.Now.AddDays(-20)
+                    Phone = "01100000003",
+                    DateOfBirth = new DateOnly(2000, 6, 5),
+                    Gender = Gender.Female,
+                    BuildingNumber = 8,
+                    Street = "Garden Road",
+                    City = "Giza",
+                    JoinDate = DateTime.Now.AddDays(-20),
+                    HealthRecord = new HealthRecord
+                    {
+                        Height = 165,
+                        Weight = 61,
+                        BloodType = "A+",
+                        Note = "Prefers cardio sessions.",
+                        LastUpdate = DateTime.Now
+                    }
                 },
                 new Member
                 {
                     Name = "Maha Ahmed",
                     Email = "maha.ahmed@powerfitness.local",
-                    Phone = "01000000004",
-                    JoinDate = DateTime.Now.AddDays(-10)
+                    Phone = "01200000004",
+                    DateOfBirth = new DateOnly(1999, 9, 16),
+                    Gender = Gender.Female,
+                    BuildingNumber = 18,
+                    Street = "October Road",
+                    City = "Giza",
+                    JoinDate = DateTime.Now.AddDays(-10),
+                    HealthRecord = new HealthRecord
+                    {
+                        Height = 168,
+                        Weight = 64,
+                        BloodType = "AB+",
+                        Note = "New member assessment completed.",
+                        LastUpdate = DateTime.Now
+                    }
+                });
+
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedTrainersAsync(GymDbContext context)
+        {
+            if (await context.Trainers.AnyAsync())
+            {
+                return;
+            }
+
+            context.Trainers.AddRange(
+                new Trainer
+                {
+                    Name = "Maryam Ali",
+                    Email = "maryam.ali@powerfitness.local",
+                    Phone = "01500000005",
+                    DateOfBirth = new DateOnly(1994, 3, 18),
+                    Gender = Gender.Female,
+                    BuildingNumber = 22,
+                    Street = "Fitness Avenue",
+                    City = "Cairo",
+                    Specialty = Specialty.Yoga,
+                    HireDate = DateTime.Now.AddMonths(-4)
+                },
+                new Trainer
+                {
+                    Name = "Khaled Hassan",
+                    Email = "khaled.hassan@powerfitness.local",
+                    Phone = "01500000006",
+                    DateOfBirth = new DateOnly(1991, 11, 20),
+                    Gender = Gender.Male,
+                    BuildingNumber = 35,
+                    Street = "Champion Street",
+                    City = "Alexandria",
+                    Specialty = Specialty.Boxing,
+                    HireDate = DateTime.Now.AddMonths(-8)
                 });
 
             await context.SaveChangesAsync();
@@ -66,7 +157,7 @@ namespace MVC.Data
                 new GymSession
                 {
                     CategoryName = "Yoga",
-                    TrainerName = "Omar",
+                    TrainerName = "Maryam Ali",
                     Description = "Yoga session focused on flexibility, breathing, and steady strength.",
                     Capacity = 12,
                     StartDate = now.AddDays(1).Date.AddHours(18),
@@ -75,7 +166,7 @@ namespace MVC.Data
                 new GymSession
                 {
                     CategoryName = "Boxing",
-                    TrainerName = "Maryam",
+                    TrainerName = "Khaled Hassan",
                     Description = "Boxing session for cardio, footwork, and core conditioning.",
                     Capacity = 12,
                     StartDate = now.AddMinutes(-30),
@@ -84,7 +175,7 @@ namespace MVC.Data
                 new GymSession
                 {
                     CategoryName = "Strength",
-                    TrainerName = "Khaled",
+                    TrainerName = "Khaled Hassan",
                     Description = "Strength class for full-body resistance training.",
                     Capacity = 15,
                     StartDate = now.AddDays(2).Date.AddHours(19),

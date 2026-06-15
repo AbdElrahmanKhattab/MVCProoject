@@ -4,6 +4,7 @@ using MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260530180209_AssignmentThreeMembersAndTrainers")]
+    partial class AssignmentThreeMembersAndTrainers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,80 +24,6 @@ namespace MVC.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("MVC.Models.Booking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BookingDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<int>("GymSessionId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsAttended")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GymSessionId");
-
-                    b.HasIndex("MemberId", "GymSessionId")
-                        .IsUnique();
-
-                    b.ToTable("Bookings");
-                });
-
-            modelBuilder.Entity("MVC.Models.GymSession", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TrainerName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GymSessions", t =>
-                        {
-                            t.HasCheckConstraint("SessionCapacityCheck", "Capacity BETWEEN 1 AND 25");
-
-                            t.HasCheckConstraint("SessionDateCheck", "EndDate > StartDate");
-                        });
-                });
 
             modelBuilder.Entity("MVC.Models.HealthRecord", b =>
                 {
@@ -196,37 +125,6 @@ namespace MVC.Migrations
                         .IsUnique();
 
                     b.ToTable("Members");
-                });
-
-            modelBuilder.Entity("MVC.Models.Membership", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlanId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
-
-                    b.HasIndex("PlanId");
-
-                    b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("MVC.Models.Plan", b =>
@@ -376,25 +274,6 @@ namespace MVC.Migrations
                     b.ToTable("Trainers");
                 });
 
-            modelBuilder.Entity("MVC.Models.Booking", b =>
-                {
-                    b.HasOne("MVC.Models.GymSession", "GymSession")
-                        .WithMany("Bookings")
-                        .HasForeignKey("GymSessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVC.Models.Member", "Member")
-                        .WithMany("Bookings")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("GymSession");
-
-                    b.Navigation("Member");
-                });
-
             modelBuilder.Entity("MVC.Models.HealthRecord", b =>
                 {
                     b.HasOne("MVC.Models.Member", "Member")
@@ -406,43 +285,10 @@ namespace MVC.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("MVC.Models.Membership", b =>
-                {
-                    b.HasOne("MVC.Models.Member", "Member")
-                        .WithMany("Memberships")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MVC.Models.Plan", "Plan")
-                        .WithMany("Memberships")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Plan");
-                });
-
-            modelBuilder.Entity("MVC.Models.GymSession", b =>
-                {
-                    b.Navigation("Bookings");
-                });
-
             modelBuilder.Entity("MVC.Models.Member", b =>
                 {
-                    b.Navigation("Bookings");
-
                     b.Navigation("HealthRecord")
                         .IsRequired();
-
-                    b.Navigation("Memberships");
-                });
-
-            modelBuilder.Entity("MVC.Models.Plan", b =>
-                {
-                    b.Navigation("Memberships");
                 });
 #pragma warning restore 612, 618
         }
