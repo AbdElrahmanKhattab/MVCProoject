@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MVC.Models;
+using System.Text.Json;
 
 namespace MVC.Data
 {
@@ -7,10 +8,76 @@ namespace MVC.Data
     {
         public static async Task InitializeAsync(GymDbContext context)
         {
+            await SeedPlansAsync(context);
             await SeedMembersAsync(context);
             await SeedSessionsAsync(context);
             await SeedMembershipsAsync(context);
             await SeedBookingsAsync(context);
+        }
+
+        private static async Task SeedPlansAsync(GymDbContext context)
+        {
+            var plans = await LoadPlansFromJsonAsync();
+
+            if (!plans.Any())
+            {
+                return;
+            }
+
+            var existingPlans = await context.Plans
+                .OrderBy(x => x.Id)
+                .ToListAsync();
+
+            if (!existingPlans.Any())
+            {
+                context.Plans.AddRange(plans);
+                await context.SaveChangesAsync();
+                return;
+            }
+
+            var legacySeedNames = new[] { "Basic", "Standard", "Premium", "Annual" };
+            var hasLegacySeedRows = existingPlans.Count == plans.Count
+                && existingPlans.Select(x => x.Name).SequenceEqual(legacySeedNames);
+
+            if (!hasLegacySeedRows)
+            {
+                return;
+            }
+
+            for (var i = 0; i < plans.Count; i++)
+            {
+                existingPlans[i].Name = plans[i].Name;
+                existingPlans[i].Description = plans[i].Description;
+                existingPlans[i].DurationDays = plans[i].DurationDays;
+                existingPlans[i].Price = plans[i].Price;
+                existingPlans[i].IsActive = plans[i].IsActive;
+                existingPlans[i].UpdatedAt = DateTime.Now;
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task<List<Plan>> LoadPlansFromJsonAsync()
+        {
+            var path = Path.Combine(AppContext.BaseDirectory, "plans.json");
+
+            if (!File.Exists(path))
+            {
+                path = Path.Combine(Directory.GetCurrentDirectory(), "plans.json");
+            }
+
+            if (!File.Exists(path))
+            {
+                return new List<Plan>();
+            }
+
+            await using var stream = File.OpenRead(path);
+            var plans = await JsonSerializer.DeserializeAsync<List<Plan>>(stream, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return plans ?? new List<Plan>();
         }
 
         private static async Task SeedMembersAsync(GymDbContext context)
