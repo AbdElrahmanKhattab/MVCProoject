@@ -1,0 +1,49 @@
+@model MembershipCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Membership";
+}
+
+<partial name="_AlertMessages" />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h4 mb-0">@ViewData["Title"]</h1>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="MemberId" class="form-label">Member</label>
+                            <select asp-for="MemberId" asp-items="Model.Members" class="form-select">
+                                <option value="">-- Select Member --</option>
+                            </select>
+                            <span asp-validation-for="MemberId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PlanId" class="form-label">Plan</label>
+                            <select asp-for="PlanId" asp-items="Model.Plans" class="form-select">
+                                <option value="">-- Select Plan --</option>
+                            </select>
+                            <span asp-validation-for="PlanId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Create Membership</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

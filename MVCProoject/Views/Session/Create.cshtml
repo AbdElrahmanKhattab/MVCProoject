@@ -1,0 +1,96 @@
+@model MVC.ViewModels.CreateSessionViewModel
+
+@{
+    ViewData["Title"] = "Create Session";
+}
+
+<section class="session-form-page my-5">
+    <header class="mb-4">
+        <p class="text-primary-color fw-bold mb-2">Training Schedule</p>
+        <h1 class="fw-bolder display-6 text-black-alternative mb-0">Create new session</h1>
+    </header>
+
+    <form asp-action="Create" method="post">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <h2 class="h5 text-primary fw-bold">Session Information</h2>
+                        <hr class="mt-2 mb-4" />
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="CategoryId" class="form-label fw-semibold"></label>
+                                <select asp-for="CategoryId" class="form-select">
+                                    <option value="">Select Category</option>
+                                    @foreach (var category in Model.Categories)
+                                    {
+                                        <option value="@category.Id">@category.CategoryName</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="TrainerId" class="form-label fw-semibold"></label>
+                                <select asp-for="TrainerId" class="form-select">
+                                    <option value="">Select Trainer</option>
+                                    @foreach (var trainer in Model.Trainers)
+                                    {
+                                        <option value="@trainer.Id">@trainer.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="TrainerId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Description" class="form-label fw-semibold"></label>
+                                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Describe the session content and objectives..."></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Capacity" class="form-label fw-semibold"></label>
+                                <input asp-for="Capacity" type="number" class="form-control" min="1" max="25" />
+                                <small class="text-muted">Maximum number of participants.</small>
+                                <span asp-validation-for="Capacity" class="text-danger d-block"></span>
+                            </div>
+                        </div>
+
+                        <h2 class="h5 text-primary fw-bold">Date & Time</h2>
+                        <hr class="mt-2 mb-4" />
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="StartDate" class="form-label fw-semibold"></label>
+                                <input asp-for="StartDate" type="datetime-local" class="form-control" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="EndDate" class="form-label fw-semibold"></label>
+                                <input asp-for="EndDate" type="datetime-local" class="form-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                            <a asp-action="Index" class="btn btn-outline">
+                                <i class="bi bi-arrow-left me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-fill">
+                                <i class="bi bi-check-lg me-1"></i>Create Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

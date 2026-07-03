@@ -1,0 +1,53 @@
+@model BookingCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Booking";
+}
+
+<h1>Create New Booking</h1>
+<hr />
+
+<div class="row">
+    <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h5 card-title mb-0">Booking Information</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <input asp-for="SessionId" type="hidden" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        @if (Model.Session is not null)
+                        {
+                            <div class="alert alert-info">
+                                Booking for <strong>@Model.Session.CategoryName</strong>
+                                on @Model.Session.StartDate.ToString("MMM dd, yyyy hh:mm tt")
+                            </div>
+                        }
+
+                        <div class="mb-3">
+                            <label asp-for="MemberId" class="form-label">Member</label>
+                            <select asp-for="MemberId" asp-items="Model.Members" class="form-select">
+                                <option value="">-- Select Member --</option>
+                            </select>
+                            <span asp-validation-for="MemberId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Create Booking
+                            </button>
+                            <a asp-action="GetMembersForUpcomingSession" asp-route-sessionId="@Model.SessionId" class="btn btn-secondary">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

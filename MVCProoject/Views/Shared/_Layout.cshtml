@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
@@ -37,16 +38,16 @@
                             <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Trainers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Sessions</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Session" ? "active" : "")" asp-controller="Session" asp-action="Index">Sessions</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Plan" ? "active" : "")" asp-controller="Plan" asp-action="Index">Plans</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Memberships</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "MemberPlan" ? "active" : "")" asp-controller="MemberPlan" asp-action="Index">Memberships</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Sessions Schedule</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "MemberSession" ? "active" : "")" asp-controller="MemberSession" asp-action="Index">Sessions Schedule</a>
                         </li>
                     </ul>
                 </div>
