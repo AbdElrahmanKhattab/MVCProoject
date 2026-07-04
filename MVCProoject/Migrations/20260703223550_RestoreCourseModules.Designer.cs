@@ -4,6 +4,7 @@ using MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260703223550_RestoreCourseModules")]
+    partial class RestoreCourseModules
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,27 +55,6 @@ namespace MVC.Migrations
                         .IsUnique();
 
                     b.ToTable("Bookings");
-                });
-
-            modelBuilder.Entity("MVC.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryName")
-                        .IsUnique();
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("MVC.Models.GymSession", b =>
@@ -216,9 +198,6 @@ namespace MVC.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("Phone")
-                        .IsUnique();
-
                     b.ToTable("Members");
                 });
 
@@ -295,84 +274,48 @@ namespace MVC.Migrations
                         {
                             t.HasCheckConstraint("PlanDurationCheck", "DurationDays Between 1 and 365");
                         });
-                });
 
-            modelBuilder.Entity("MVC.Models.Trainer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Specialty")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Trainers");
-                });
-
-            modelBuilder.Entity("MVC.Models.Booking", b =>
-                {
-                    b.HasOne("MVC.Models.GymSession", "GymSession")
-                        .WithMany("Bookings")
-                        .HasForeignKey("GymSessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVC.Models.Member", "Member")
-                        .WithMany("Bookings")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("GymSession");
-
-                    b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("MVC.Models.Membership", b =>
-                {
-                    b.HasOne("MVC.Models.Member", "Member")
-                        .WithMany("Memberships")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MVC.Models.Plan", "Plan")
-                        .WithMany("Memberships")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Plan");
-                });
-
-            modelBuilder.Entity("MVC.Models.GymSession", b =>
-                {
-                    b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("MVC.Models.Member", b =>
-                {
-                    b.Navigation("Bookings");
-
-                    b.Navigation("Memberships");
-                });
-
-            modelBuilder.Entity("MVC.Models.Plan", b =>
-                {
-                    b.Navigation("Memberships");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Entry membership for gym access and starter workouts.",
+                            DurationDays = 30,
+                            IsActive = true,
+                            Name = "Basic",
+                            Price = 300m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Balanced plan for regular members with group class access.",
+                            DurationDays = 60,
+                            IsActive = true,
+                            Name = "Standard",
+                            Price = 600m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Full access plan with premium class support.",
+                            DurationDays = 90,
+                            IsActive = true,
+                            Name = "Premium",
+                            Price = 900m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Best value yearly membership for committed members.",
+                            DurationDays = 365,
+                            IsActive = true,
+                            Name = "Annual",
+                            Price = 3000m
+                        });
                 });
 
             modelBuilder.Entity("MVC.Models.Trainer", b =>

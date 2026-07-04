@@ -8,23 +8,19 @@ namespace MVC.Configurations
     {
         public void Configure(EntityTypeBuilder<Member> builder)
         {
-            builder.Property(x => x.Name)
-                .HasColumnType("varchar")
-                .HasMaxLength(50);
-
-            builder.Property(x => x.Email)
-                .HasColumnType("varchar")
-                .HasMaxLength(100);
-
-            builder.Property(x => x.Phone)
-                .HasColumnType("varchar")
-                .HasMaxLength(11);
-
-            builder.Property(x => x.JoinDate)
-                .HasDefaultValueSql("GETDATE()");
-
+            builder.Property(x => x.Name).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.Email).HasMaxLength(150).IsRequired();
+            builder.Property(x => x.Phone).HasMaxLength(30).IsRequired();
+            builder.Property(x => x.BuildingNumber).HasMaxLength(20).IsRequired();
+            builder.Property(x => x.Street).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.City).HasMaxLength(60).IsRequired();
+            builder.Property(x => x.PhotoFileName).HasMaxLength(255);
+            builder.Property(x => x.PhotoContentType).HasMaxLength(100);
             builder.HasIndex(x => x.Email).IsUnique();
-            builder.HasIndex(x => x.Phone).IsUnique();
+            builder.HasOne(x => x.HealthRecord)
+                .WithOne(x => x.Member)
+                .HasForeignKey<HealthRecord>(x => x.MemberId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

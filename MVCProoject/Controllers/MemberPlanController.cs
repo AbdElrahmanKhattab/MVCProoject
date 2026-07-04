@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class MemberPlanController : Controller
     {
         private readonly GymDbContext _context;
@@ -135,3 +137,5 @@ namespace MVC.Controllers
         }
     }
 }
+
+

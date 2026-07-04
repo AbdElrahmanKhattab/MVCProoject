@@ -1,4 +1,4 @@
-namespace MVC.Models
+﻿namespace MVC.Models
 {
     public class Plan
     {
@@ -14,3 +14,4 @@ namespace MVC.Models
         public ICollection<Membership> Memberships { get; set; } = new List<Membership>();
     }
 }
+

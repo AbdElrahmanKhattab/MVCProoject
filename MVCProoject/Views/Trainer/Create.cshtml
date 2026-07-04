@@ -1,0 +1,15 @@
+﻿@model Trainer
+@{ ViewData["Title"] = "Trainer"; }
+<div class="container mt-5">
+    <form method="post" class="card p-4 shadow-sm">
+        <input asp-for="Id" type="hidden" />
+        <div class="mb-3"><label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" /><span asp-validation-for="Name" class="text-danger"></span></div>
+        <div class="mb-3"><label asp-for="Email" class="form-label"></label><input asp-for="Email" class="form-control" /><span asp-validation-for="Email" class="text-danger"></span></div>
+        <div class="mb-3"><label asp-for="Phone" class="form-label"></label><input asp-for="Phone" class="form-control" /><span asp-validation-for="Phone" class="text-danger"></span></div>
+        <div class="mb-3"><label asp-for="Specialties" class="form-label"></label><input asp-for="Specialties" class="form-control" /><span asp-validation-for="Specialties" class="text-danger"></span></div>
+        <div class="d-flex gap-2"><a asp-action="Index" class="btn btn-outline-secondary">Back</a><button class="btn btn-primary">Save</button></div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
