@@ -1,0 +1,3 @@
+﻿@model GymSession
+@{ ViewData["Title"] = "Delete Session"; }
+<div class="container mt-5"><div class="card p-5 shadow text-center"><p class="fs-3 text-primary-color">Delete this session?</p><form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post"><a asp-action="Index" class="btn btn-outline-secondary">No</a><button type="submit" class="btn btn-danger">Yes</button></form></div></div>

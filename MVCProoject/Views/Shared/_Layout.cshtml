@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,23 +31,37 @@
                             <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Members</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Member" ? "active" : "")" asp-controller="Member" asp-action="Index">Members</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Trainers</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Trainer" ? "active" : "")" asp-controller="Trainer" asp-action="Index">Trainers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Sessions</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Session" ? "active" : "")" asp-controller="Session" asp-action="Index">Sessions</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "Plan" ? "active" : "")" asp-controller="Plan" asp-action="Index">Plans</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Memberships</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "MemberPlan" ? "active" : "")" asp-controller="MemberPlan" asp-action="Index">Memberships</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" href="#">Sessions Schedule</a>
+                            <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5 @(ViewContext.RouteData.Values["controller"]?.ToString() == "MemberSession" ? "active" : "")" asp-controller="MemberSession" asp-action="Index">Sessions Schedule</a>
                         </li>
+                                            @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-link nav-link px-3 py-2 mx-2 fw-bolder fs-5 text-black-alternative">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -78,3 +92,5 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+

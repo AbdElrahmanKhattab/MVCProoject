@@ -1,4 +1,4 @@
-namespace MVC.Models
+﻿namespace MVC.Models
 {
     public class Plan
     {
@@ -10,5 +10,8 @@ namespace MVC.Models
         public int DurationDays { get; set; }
         public decimal Price { get; set; }
         public bool IsActive { get; set; }
+
+        public ICollection<Membership> Memberships { get; set; } = new List<Membership>();
     }
 }
+
